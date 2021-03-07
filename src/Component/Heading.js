@@ -1,18 +1,27 @@
 import React from "react";
 import { Link, Typography } from "@material-ui/core";
+import { connect } from 'react-redux';
+import { toggleListToAllHouses , toggleListToMyHouses} from '../Redux/actions';
 
-const Links = (props) =>{
+
+const mapDispatchToProps =(dispatch)=> ({
+    changeListTypeToAll : ()=>dispatch(toggleListToAllHouses()),
+    changeListTypeToMy: ()=>dispatch(toggleListToMyHouses())   
+})
+
+
+const Heading = (props)=>{
     return (
         <Typography>
             <Link href="#" onClick={(event)=>{
                 event.preventDefault();
-                props.changeListType('allHouses');
+                props.changeListTypeToAll();
             }}>
             All houses
             </Link>
             <Link href="#" onClick={(event)=>{
                 event.preventDefault();
-                props.changeListType('myHouses');
+                props.changeListTypeToMy();
             }}>
             My property List
             </Link>
@@ -20,14 +29,5 @@ const Links = (props) =>{
         
     )
 }
-const Heading = (props)=>{
-    return(
-        <>
-            Here will go the heading
-            <Links changeListType={props.setTypeOfHouseList}/>
-        </>
-        
-    )
-}
 
-export default Heading;
+export default connect(null,mapDispatchToProps)(Heading);

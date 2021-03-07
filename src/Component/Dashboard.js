@@ -1,22 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Typography} from "@material-ui/core";
 import Heading from "./Heading";
 import HouseList from "./HouseList";
 import MyHouseList  from "./MyHouseList";
+import { getHouseListType } from '../Redux/selectors';
+import { connect } from 'react-redux';
 
-
-const Dashboard = () =>{
-    let [typeOfHouseList, setTypeOfHouseList] = useState('allHouses');
+const mapStateToProps = (state) =>{
+    const listType = getHouseListType(state);
+    return {listType}
+}
+const Dashboard = (props) =>{
     return(
         <>
         <Typography>
-        <Heading setTypeOfHouseList={setTypeOfHouseList} />
+        <Heading />
         <Container maxWidth='sm'>
-            {typeOfHouseList === 'allHouses'?<HouseList/>:<MyHouseList/>}  
+            {props.listType === 'allHouses'?<HouseList/>:<MyHouseList/>}  
         </Container>
         </Typography>
         
         </>
     )
 }
-export default Dashboard;
+
+export default connect(mapStateToProps)(Dashboard);
