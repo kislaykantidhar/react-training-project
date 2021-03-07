@@ -1,2 +1,3 @@
-export const TOGGLE_LIST_TO_ALL_HOUSES = 'TOGGLE_LIST_TO_ALL_HOUSES';
-export const TOGGLE_LIST_TO_MY_HOUSES = 'TOGGLE_LIST_TO_MY_HOUSES';
+
+export const SIGNIN = 'SIGNIN';
+export const SIGNOUT = 'SIGNOUT';

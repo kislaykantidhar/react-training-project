@@ -1,1 +1,2 @@
-export const getHouseListType = (store) => store.housesListType.listType;
+
+export const getSignIninfo = (store) => store.signedIn;

@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
-import housesListType from "./housesListType";
+
+import signedIn from './signedIn';
 
 
-export default combineReducers({ housesListType});
+export default combineReducers({ signedIn });
