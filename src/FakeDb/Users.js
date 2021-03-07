@@ -1,4 +1,4 @@
-export const user = () =>({
+export const users = {
     'user1@mail.com': {
         'id':'1',
         'name': 'user1',
@@ -9,4 +9,4 @@ export const user = () =>({
         'name': 'user2',
         'password': 'password'
     }
-})
+}

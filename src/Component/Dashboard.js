@@ -1,10 +1,11 @@
 import React from "react";
-import {  Typography, AppBar, Tabs, Tab, Box} from "@material-ui/core";
+import {  Typography, AppBar, Tabs, Tab, Box, Link} from "@material-ui/core";
 import HouseList from "./HouseList";
 import MyHouseList  from "./MyHouseList";
 import SignIn from "./SignIn";
 import { getSignIninfo } from '../Redux/selectors';
 import { connect } from 'react-redux';
+import { signOut } from "../Redux/actions";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -38,6 +39,9 @@ const mapStateToProps = (state) =>{
     const signInInfo = getSignIninfo(state);
     return {signInInfo};
 }
+const mapDispatchToProps = (dispatch) =>({
+  signout : ()=>dispatch(signOut())
+})
 const Dashboard = (props) =>{
     const [value, setValue] = React.useState(0);
 
@@ -52,8 +56,14 @@ const Dashboard = (props) =>{
                     <Tab label="All property" {...a11yProps(0)}  />
                     {props.signInInfo.signedIn?<Tab label="My Property" {...a11yProps(1)}  />:null}
                     {!(props.signInInfo.signedIn)?<Tab label="Sign In"  {...a11yProps(1)} />: null}
+                     
                 </Tabs>
+                
             </AppBar>
+            {props.signInInfo.signedIn?<Link href="#" onClick={(event)=>{
+              event.preventDefault();
+              props.signout();
+            }}>Sign Out</Link>:null}
             <TabPanel value={value} index={0}>
             <HouseList/>
             </TabPanel>
@@ -69,4 +79,4 @@ const Dashboard = (props) =>{
     )
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps,mapDispatchToProps)(Dashboard);
