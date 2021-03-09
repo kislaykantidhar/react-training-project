@@ -1,11 +1,13 @@
 import React from "react";
-import {  Typography, AppBar, Tabs, Tab, Box, Link} from "@material-ui/core";
+import {  Typography, AppBar, Tabs, Tab, Box, Link, formatMs} from "@material-ui/core";
 import HouseList from "./HouseList";
 import MyHouseList  from "./MyHouseList";
 import SignIn from "./SignIn";
+import SignUp from './SignUp';
 import { getSignIninfo } from '../Redux/selectors';
 import { connect } from 'react-redux';
 import { signOut } from "../Redux/actions";
+import AddHome from "./AddHome";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -56,6 +58,8 @@ const Dashboard = (props) =>{
                     <Tab label="All property" {...a11yProps(0)}  />
                     {props.signInInfo.signedIn?<Tab label="My Property" {...a11yProps(1)}  />:null}
                     {!(props.signInInfo.signedIn)?<Tab label="Sign In"  {...a11yProps(1)} />: null}
+                    {props.signInInfo.signedIn?<Tab label="Add Property" {...a11yProps(2)}  />:null}
+                    {!(props.signInInfo.signedIn)?<Tab label="Sign Up"  {...a11yProps(2)} />: null}
                      
                 </Tabs>
                 
@@ -72,6 +76,12 @@ const Dashboard = (props) =>{
             </TabPanel>:null}
             {!(props.signInInfo.signedIn)?<TabPanel value={value} index={1}>
                 <SignIn/>
+            </TabPanel>:null}
+            {props.signInInfo.signedIn?<TabPanel  value={value} index={2}>
+            <AddHome/>
+            </TabPanel>:null}
+            {!(props.signInInfo.signedIn)?<TabPanel value={value} index={2}>
+                <SignUp/>
             </TabPanel>:null}
         </Typography>
         
