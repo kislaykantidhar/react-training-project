@@ -8,6 +8,7 @@ import { getSignIninfo } from '../Redux/selectors';
 import { connect } from 'react-redux';
 import { signOut } from "../Redux/actions";
 import AddHome from "./AddHome";
+import {signOutController} from "../Controllers/authController"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -66,7 +67,13 @@ const Dashboard = (props) =>{
             </AppBar>
             {props.signInInfo.signedIn?<Link href="#" onClick={(event)=>{
               event.preventDefault();
-              props.signout();
+              signOutController().then(()=>{
+                props.signout();
+              })
+              .catch(error=>{
+                alert(error.message)
+              })
+              
             }}>Sign Out</Link>:null}
             <TabPanel value={value} index={0}>
             <HouseList/>

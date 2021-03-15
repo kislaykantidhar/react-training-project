@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button,TextField } from "@material-ui/core";
-import { isValidUser } from '../Controllers/isValidUser';
 import { signIn } from '../Redux/actions';
 import { connect } from 'react-redux';
+import {signInController,getCurrentUser} from '../Controllers/authController'
 // const mapDispatchToProps =(dispatch)=> ({
 //     changeListTypeToAll : ()=>dispatch(toggleListToAllHouses()),
 //     changeListTypeToMy: ()=>dispatch(toggleListToMyHouses())   
@@ -15,17 +15,14 @@ const SignIn = (props) =>{
     const [password,setPassword] = useState('');
     
     const signInOperation =() =>{
-        if(isValidUser(email,password))
-        {
-            props.signInUser(email,password);
-        }
-        else
-        {
-            setEmail('');
-            setPassword('');
-            alert('Either your email or password is invalid');
-            
-        }
+        signInController(email,password)
+        .then(user=>{
+            props.signInUser(getCurrentUser().email,getCurrentUser().uid);
+        })
+        .catch(error =>{
+            alert(error);
+        })
+        
     }
     return(
         <form>

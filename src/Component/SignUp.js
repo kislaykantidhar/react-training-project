@@ -1,10 +1,35 @@
 import React, { useState } from 'react';
+import { signIn } from '../Redux/actions';
+import { connect } from 'react-redux';
 import { Button,TextField } from "@material-ui/core";
-import {signUpController} from '../Controllers/authController';
-const SignUp = () =>{
+import {getCurrentUser, signUpController} from '../Controllers/authController';
+
+
+const mapDispatchToProps = (dispatch) => ({
+    signInUser : (email, password)=>dispatch(signIn(email,password))
+})
+
+const SignUp = (props) =>{
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const signUpOperation = () => {
+        signUpController(email,password)
+        .then(user=>{
+            return getCurrentUser();
+        })
+        .then(user=>{
+            return user.updateProfile({
+                displayName: name
+            })
+        })
+        .then(onfullfilled=>{
+            props.signInUser(getCurrentUser().email,getCurrentUser().uid);
+        })
+        .catch(error=>{
+            alert(error.message);
+        })
+    }
     return(
         <form>
         <TextField
@@ -43,15 +68,16 @@ const SignUp = () =>{
         id="password"
         label="password"
         autoFocus
+        type='password'
         value = {password}
-        onChage = {(event)=>{
+        onChange = {(event)=>{
             event.preventDefault();
             setPassword(event.target.value);
         }}
         />
-        <Button color='primary'>Sign Up</Button>
+        <Button color='primary' onClick={()=>{signUpOperation()}}>Sign Up</Button>
     </form>
     )
     
 }
-export default SignUp;
+export default connect(null,mapDispatchToProps)(SignUp);

@@ -1,4 +1,4 @@
-export const firebaseConfig = {
+ const firebaseConfig = {
     apiKey: "AIzaSyA8Bks8Nt7CqBtTxECBw5U9dSCU1hcOqgk",
     authDomain: "react-training-project-70abf.firebaseapp.com",
     projectId: "react-training-project-70abf",
@@ -6,3 +6,4 @@ export const firebaseConfig = {
     messagingSenderId: "597297472868",
     appId: "1:597297472868:web:49be2ed4e10b0586778671"
   };
+  export default firebaseConfig;

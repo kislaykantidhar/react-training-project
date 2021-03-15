@@ -1,28 +1,33 @@
 import firebase from '../FireBase/firebaseInit';
 
-export const signUpController =async (email,password) =>{
-    try {
-        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email,password);
-        return userCredential.user;
-    } catch (error) {
-        return error;
-    }   
-}
+export const signUpController =(email,password)=> new Promise((resolve,reject)=>{
+    firebase.auth().createUserWithEmailAndPassword(email,password)
+    .then(userCredential=>{
+        resolve(userCredential.user);
+    })
+    .catch(error=>{
+        reject(error.message);
+    })
+})
 
-export const signInController = async (email,password) =>{
-    try {
-        const userCredential = await firebase.auth().signInWithEmailAndPassword(email,password);
-        return userCredential.user;
-    } catch (error) {
-        return error;
-    }
-}
+export const signInController =(email,password)=> new Promise((resolve,reject)=>{
+    firebase.auth().signInWithEmailAndPassword(email,password)
+    .then(userCredential=>{
+        resolve(userCredential.user);
+    })
+    .catch(error=>{
+        reject(error.message);
+    })
+})
 
-export const signOutController = async () =>{
-    try {
-        const signOutSuccess = await firebase.auth().signOut();
-        return signOutSuccess;
-    } catch (error) {
-        return error;
-    }
-}
+export const signOutController = () =>new Promise((resolve,reject)=>{
+    firebase.auth().signOut()
+    .then(()=>{
+        resolve("signed out");
+    })
+    .catch(error=>{
+        reject(error.message);
+    })
+})
+
+export const getCurrentUser = () => firebase.auth().currentUser;
